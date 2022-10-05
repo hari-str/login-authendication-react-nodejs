@@ -43,7 +43,7 @@ const Register = () => {
       console.log(data);
       setData(data);
       // console.log(data.message);
-      if (data.status === 404) {
+      if (data.status === 404 || 401) {
         // window.alert("Invalid Register!");
         console.log(data.message);
       } else {

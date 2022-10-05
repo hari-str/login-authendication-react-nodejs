@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { auth, googleProvider } from "../firebase";
 import logLogo from "../images/loginimg.jpg";
 
 const Login = () => {
-  // let name, value;
   const url = "http://localhost:5000";
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [data, setData] = useState([]);
+  const [user, setUser] = useState(null);
 
   const loginClick = async (e) => {
     try {
       e.preventDefault();
-      // const { email } = email;
-      // const { password } = password;
       const res = await fetch(`${url}/api/login`, {
         method: "POST",
         headers: {
@@ -27,19 +26,25 @@ const Login = () => {
       });
       const data = await res.json();
       console.log(data);
-
       setData(data);
 
-      // console.log(data);
-      // if (data. === "Login Sucessfull") {
-      //   console.log(data);
-      // } else {
-      //   navigate("/");
-      // }
+      if (res.status === 200) {
+        navigate("/");
+      }
     } catch (err) {
       console.log(err);
     }
   };
+
+  const googleLogin = async () => {
+    try {
+      await auth.signInWithPopup(googleProvider);
+      setUser(await auth.currentUser);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  console.log(user);
   return (
     <section className="container pt-3 pb-4">
       <div className="row align-items-center justify-content-center ">
@@ -80,7 +85,6 @@ const Login = () => {
                 required
               />
             </div>
-
             <button
               type="submit"
               onClick={loginClick}
@@ -89,6 +93,13 @@ const Login = () => {
               Login
             </button>
           </form>
+          <button
+            type="button"
+            onClick={googleLogin}
+            className="btn mt-3 btn-outline-secondary"
+          >
+            Login with Google
+          </button>
         </div>
       </div>
     </section>
