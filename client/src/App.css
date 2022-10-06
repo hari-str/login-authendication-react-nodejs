@@ -6,3 +6,29 @@
   box-sizing: border-box;
   font-family: "Source Sans Pro", sans-serif;
 }
+
+.google-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #b1afaf;
+  border-radius: 4px;
+  margin-top: 2rem;
+  padding: 5px;
+  cursor: pointer;
+  transition: 0.4s ease-in;
+}
+
+.google-button:hover {
+  background-color: #efefef;
+}
+.google-button > img {
+  width: 25px;
+}
+
+.google-btn {
+  background-color: transparent;
+  outline: none;
+  border: none;
+  margin-left: 10px;
+}

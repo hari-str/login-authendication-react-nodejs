@@ -55,6 +55,7 @@ const Register = () => {
       console.log(err);
     }
   };
+
   return (
     <section className="container pt-4 pb-4">
       <div className="row align-items-center">

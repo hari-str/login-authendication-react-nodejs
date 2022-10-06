@@ -45,7 +45,10 @@ const login = async (req, res, next) => {
     const userPwd = await userModel.findOne({ password: password });
     if (!userPwd) return next(errorHandler(401, "Password is not valid!"));
 
-    res.status(200).json("Login Sucessfull");
+    res.status(200).json({
+      status: 200,
+      message: "Login sucessfull",
+    });
   } catch (err) {
     next(err);
   }

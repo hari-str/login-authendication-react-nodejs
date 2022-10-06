@@ -39,15 +39,17 @@ const Login = () => {
   const googleLogin = async () => {
     try {
       await auth.signInWithPopup(googleProvider);
+      // await auth.signInWithRedirect(googleProvider);
       setUser(await auth.currentUser);
     } catch (err) {
       console.log(err);
     }
   };
+
   console.log(user);
   return (
     <section className="container pt-3 pb-4">
-      <div className="row align-items-center justify-content-center ">
+      <div className="row  justify-content-center ">
         <div className="col-sm col-lg-5 col-xl">
           <div className="col-xl-10 d-none d-md-block">
             <img src={logLogo} className="w-100" alt="login" />
@@ -93,13 +95,15 @@ const Login = () => {
               Login
             </button>
           </form>
-          <button
-            type="button"
-            onClick={googleLogin}
-            className="btn mt-3 btn-outline-secondary"
-          >
-            Login with Google
-          </button>
+          <div className="google-button col-xl-8" onClick={googleLogin}>
+            <img
+              src="https://assets.stickpng.com/images/5847f9cbcef1014c0b5e48c8.png"
+              alt="googlebtn"
+            />
+            <button type="button" className="google-btn">
+              Login with Google
+            </button>
+          </div>
         </div>
       </div>
     </section>
