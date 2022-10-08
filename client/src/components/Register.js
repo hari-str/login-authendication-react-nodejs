@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
+import axios from "axios";
 import regLogo from "../images/registerimg.jpg";
 
 const Register = () => {
@@ -8,6 +9,7 @@ const Register = () => {
   const [user, setUser] = useState({
     name: "",
     email: "",
+    mobile: "",
     password: "",
     cpassword: "",
   });
@@ -26,33 +28,27 @@ const Register = () => {
   const postData = async (e) => {
     try {
       e.preventDefault();
-      const { name, email, password, cpassword } = user;
-      const res = await fetch(`${url}/api/register`, {
-        method: "POST",
+      const { name, email, mobile, password, cpassword } = user;
+
+      const config = {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-          cpassword,
-        }),
-      });
-      const data = await res.json();
-      console.log(data);
-      setData(data);
+      };
+      const res = await axios.post(
+        `${url}/api/register`,
+        { name, email, mobile, password, cpassword },
+        config
+      );
+      setData(res);
       // console.log(data.message);
-      if (data.status === 404 || 401) {
-        // window.alert("Invalid Register!");
-        console.log(data.message);
-      } else {
-        window.alert("Register succesfully..!");
-        console.log(data.message);
+
+      if (res.status === 200) {
         navigate("/login");
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data);
+      setData(err.response.data);
     }
   };
 
@@ -91,6 +87,16 @@ const Register = () => {
                 aria-describedby="emailHelp"
               />
             </div>
+            <div className="mb-3 ">
+              <input
+                type="number"
+                className="form-control p-2"
+                placeholder="Mobile"
+                name="mobile"
+                value={user.mobile}
+                onChange={handleInputs}
+              />
+            </div>
             <div className="mb-3">
               <input
                 type="password"
@@ -120,6 +126,11 @@ const Register = () => {
               Register
             </button>
           </form>
+
+          <p className="mt-3 text-center col-xl-8">
+            I have already account
+            <NavLink to="/login">Login</NavLink>
+          </p>
         </div>
         <div className="col-sm col-lg-6 col-xl d-none d-md-block">
           <img src={regLogo} className="w-100" alt="register" />

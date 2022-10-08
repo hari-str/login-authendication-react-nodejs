@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../firebase";
+import axios from "axios";
 import logLogo from "../images/loginimg.jpg";
+import googleIcon from "../images/google-icon.png";
 
 const Login = () => {
   const url = "http://localhost:5000";
@@ -9,44 +11,49 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [data, setData] = useState([]);
-  const [user, setUser] = useState(null);
+  // const [user, setUser] = useState(null);
 
-  const loginClick = async (e) => {
+  async function handleSubmit(e) {
     try {
       e.preventDefault();
-      const res = await fetch(`${url}/api/login`, {
-        method: "POST",
+      const config = {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-      const data = await res.json();
-      console.log(data);
-      setData(data);
+      };
+      const res = await axios.post(
+        `${url}/api/login`,
+        { email: email, password: password },
+        config
+      );
+
+      console.log(res);
+      setData(res);
 
       if (res.status === 200) {
         navigate("/");
       }
     } catch (err) {
-      console.log(err);
+      console.log(err.response.data);
+      setData(err.response.data);
     }
-  };
+    // console.log(data);
+  }
 
   const googleLogin = async () => {
     try {
       await auth.signInWithPopup(googleProvider);
       // await auth.signInWithRedirect(googleProvider);
-      setUser(await auth.currentUser);
+      setData(await auth.currentUser);
     } catch (err) {
       console.log(err);
     }
+
+    if (data) {
+      navigate("/");
+    }
   };
 
-  console.log(user);
   return (
     <section className="container pt-3 pb-4">
       <div className="row  justify-content-center ">
@@ -60,7 +67,7 @@ const Login = () => {
             <h1 style={{ fontWeight: "600" }}>Login</h1>
           </div>
 
-          {data.message && (
+          {data?.message && (
             <div className="col-xl-8 p-3 alert alert-danger" role="alert">
               {data.message}
             </div>
@@ -74,7 +81,6 @@ const Login = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Email"
                 aria-describedby="emailHelp"
-                required
               />
             </div>
             <div className="mb-3">
@@ -84,22 +90,20 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
-                required
               />
             </div>
             <button
               type="submit"
-              onClick={loginClick}
+              onClick={handleSubmit}
               className="btn btn-primary p-2 w-100"
             >
               Login
             </button>
           </form>
+
+          <p className="text-center mt-2 col-xl-8">OR</p>
           <div className="google-button col-xl-8" onClick={googleLogin}>
-            <img
-              src="https://assets.stickpng.com/images/5847f9cbcef1014c0b5e48c8.png"
-              alt="googlebtn"
-            />
+            <img src={googleIcon} alt="googleIcon" />
             <button type="button" className="google-btn">
               Login with Google
             </button>
