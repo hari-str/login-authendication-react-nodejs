@@ -7,6 +7,13 @@
   font-family: "Source Sans Pro", sans-serif;
 }
 
+/* button */
+
+.btn:focus {
+  box-shadow: none !important;
+}
+
+/* google login */
 .google-button {
   display: flex;
   justify-content: center;
@@ -31,4 +38,9 @@
   outline: none;
   border: none;
   margin-left: 10px;
+}
+
+/* About page */
+.about_page {
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
 }

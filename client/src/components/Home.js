@@ -21,12 +21,13 @@ const Home = () => {
       className="d-flex justify-content-center align-items-center"
       style={{ height: "90vh" }}
     >
-      <h1>Welcome to Home Page! ✋</h1>
-      <br />
-      <br />
-      <button type="submit" onClick={logOut} className="btn btn-primary p-2">
-        Log out
-      </button>
+      <div className="text-center">
+        <h1>Welcome to Home Page! ✋</h1>
+
+        <button type="submit" onClick={logOut} className="btn btn-danger">
+          Log out
+        </button>
+      </div>
     </div>
   );
 };

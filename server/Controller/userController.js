@@ -57,19 +57,12 @@ const login = async (req, res, next) => {
     res
       .cookie("my_token", userToken, {
         httpOnly: true,
-        // expires: new Date(Date.now() + 5000),
       })
       .status(200)
       .json({
         status: 200,
         message: "Login sucessfull",
-        token: userToken,
       });
-
-    // res.status(200).json({
-    //   status: 200,
-    //   message: "Login sucessfull",
-    // });
   } catch (err) {
     next(err);
   }
@@ -86,14 +79,8 @@ const logout = (req, res, next) => {
 //getdata
 const about = async (req, res, next) => {
   try {
-    // let token = req.cookies.my_token;
-    // console.log(token);
-    const getUser = await userModel
-      .find({})
-      .select(["-password", "-cpassword"]);
-
     res.status(200).json({
-      data: getUser,
+      data: req.rootUser,
     });
   } catch (err) {
     next(err);
