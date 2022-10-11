@@ -1,7 +1,71 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { UserContext } from "../App";
 
 const Navbar = () => {
+  const { state, dispatch } = useContext(UserContext);
+  const RenderMenu = () => {
+    if (state) {
+      return (
+        <>
+          <li className="nav-item">
+            <NavLink to="/" className="nav-link active" aria-current="page">
+              Home
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/about"
+              className="nav-link active"
+              aria-current="page"
+            >
+              About
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/logout" className="nav-link">
+              <button type="button" className="btn btn-light">
+                Logout
+              </button>
+            </NavLink>
+          </li>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <li className="nav-item">
+            <NavLink to="/" className="nav-link active" aria-current="page">
+              Home
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink
+              to="/about"
+              className="nav-link active"
+              aria-current="page"
+            >
+              About
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/login" className="nav-link">
+              <button type="button" className="btn btn-light">
+                Login
+              </button>
+            </NavLink>
+          </li>
+          <li className="nav-item">
+            <NavLink to="/register" className="nav-link" href="">
+              <button type="button" className="btn btn-primary">
+                SignUp
+              </button>
+            </NavLink>
+          </li>
+        </>
+      );
+    }
+  };
   return (
     <>
       <nav className="navbar navbar-expand-lg bg-light">
@@ -22,7 +86,7 @@ const Navbar = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
             <ul className="navbar-nav ms-auto align-items-center">
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <NavLink to="/" className="nav-link active" aria-current="page">
                   Home
                 </NavLink>
@@ -56,7 +120,8 @@ const Navbar = () => {
                     Logout
                   </button>
                 </NavLink>
-              </li>
+              </li> */}
+              <RenderMenu />
             </ul>
           </div>
         </div>

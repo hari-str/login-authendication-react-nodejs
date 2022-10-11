@@ -1,18 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { auth, googleProvider } from "../firebase";
 import axios from "axios";
 import logLogo from "../images/loginimg.jpg";
 import googleIcon from "../images/google-icon.png";
 import { URL } from "../Url.js";
+import { UserContext } from "../App";
 
 const Login = () => {
-  // const url = "http://localhost:5000";
+  const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [data, setData] = useState([]);
-  // const [user, setUser] = useState(null);
 
   async function handleSubmit(e) {
     try {
@@ -21,6 +21,7 @@ const Login = () => {
         headers: {
           "Content-Type": "application/json",
         },
+        credentials: "include",
       };
       const res = await axios.post(
         `${URL}/api/login`,
@@ -32,6 +33,8 @@ const Login = () => {
       setData(res);
 
       if (res.status === 200) {
+        dispatch({ type: "USER", payload: true });
+        window.alert("Login Successfull");
         navigate("/");
       }
     } catch (err) {
@@ -43,7 +46,6 @@ const Login = () => {
 
   const googleLogin = async () => {
     try {
-      // await auth.signInWithPopup(googleProvider);
       await auth.signInWithRedirect(googleProvider);
       setData(await auth.currentUser);
     } catch (err) {
