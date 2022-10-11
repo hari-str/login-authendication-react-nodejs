@@ -9,7 +9,9 @@ const verifyToken = async (req, res, next) => {
   if (!token) return next(errorHandler(401, "Token not Found!"));
 
   const authToken = jwt.verify(token, process.env.TOKENKEY);
-  const rootUser = await userModel.findOne({ _id: authToken.id, id: token });
+  const rootUser = await userModel
+    .findOne({ _id: authToken.id, id: token })
+    .select(["-password", "-cpassword"]);
 
   if (!rootUser) return next(errorHandler(401, "user not found!"));
   req.token = token;

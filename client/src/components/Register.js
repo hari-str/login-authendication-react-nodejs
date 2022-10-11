@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 import regLogo from "../images/registerimg.jpg";
+import { URL } from "../Url.js";
 
 const Register = () => {
-  const url = "http://localhost:5000";
+  // const url = "http://localhost:5000";
   const navigate = useNavigate();
   const [user, setUser] = useState({
     name: "",
@@ -36,7 +37,7 @@ const Register = () => {
         },
       };
       const res = await axios.post(
-        `${url}/api/register`,
+        `${URL}/api/register`,
         { name, email, mobile, password, cpassword },
         config
       );

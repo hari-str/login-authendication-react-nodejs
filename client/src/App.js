@@ -4,6 +4,7 @@ import Home from "./components/Home";
 import About from "./components/About";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import Errorpage from "./components/Errorpage";
 import axios from "axios";
 import "./App.css";
 
@@ -18,6 +19,7 @@ function App() {
         <Route exact path="/about" element={<About />}></Route>
         <Route exact path="/login" element={<Login />}></Route>
         <Route exact path="/register" element={<Register />}></Route>
+        <Route exact path="*" element={<Errorpage />}></Route>
       </Routes>
     </div>
   );

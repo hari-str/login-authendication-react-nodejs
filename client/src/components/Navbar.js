@@ -38,15 +38,22 @@ const Navbar = () => {
               </li>
               <li className="nav-item">
                 <NavLink to="/login" className="nav-link">
-                  <button type="button" class="btn btn-light">
+                  <button type="button" className="btn btn-light">
                     Login
                   </button>
                 </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink to="/register" className="nav-link" href="">
-                  <button type="button" class="btn btn-primary">
+                  <button type="button" className="btn btn-primary">
                     SignUp
+                  </button>
+                </NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink to="/logout" className="nav-link">
+                  <button type="button" className="btn btn-light">
+                    Logout
                   </button>
                 </NavLink>
               </li>

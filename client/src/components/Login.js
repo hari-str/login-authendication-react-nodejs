@@ -4,9 +4,10 @@ import { auth, googleProvider } from "../firebase";
 import axios from "axios";
 import logLogo from "../images/loginimg.jpg";
 import googleIcon from "../images/google-icon.png";
+import { URL } from "../Url.js";
 
 const Login = () => {
-  const url = "http://localhost:5000";
+  // const url = "http://localhost:5000";
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -22,7 +23,7 @@ const Login = () => {
         },
       };
       const res = await axios.post(
-        `${url}/api/login`,
+        `${URL}/api/login`,
         { email: email, password: password },
         config
       );
@@ -42,8 +43,8 @@ const Login = () => {
 
   const googleLogin = async () => {
     try {
-      await auth.signInWithPopup(googleProvider);
-      // await auth.signInWithRedirect(googleProvider);
+      // await auth.signInWithPopup(googleProvider);
+      await auth.signInWithRedirect(googleProvider);
       setData(await auth.currentUser);
     } catch (err) {
       console.log(err);
