@@ -1,9 +1,7 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { auth, googleProvider } from "../firebase";
+import { useNavigate, NavLink } from "react-router-dom";
 import axios from "axios";
 import logLogo from "../images/loginimg.jpg";
-import googleIcon from "../images/google-icon.png";
 import { URL } from "../Url.js";
 import { UserContext } from "../App";
 
@@ -29,13 +27,14 @@ const Login = () => {
         config
       );
 
-      console.log(res);
+      // console.log(res);
       setData(res);
 
       if (res.status === 200) {
         dispatch({ type: "USER", payload: true });
         window.alert("Login Successfull");
         navigate("/");
+        // localStorage.setItem("userInfo", JSON.stringify(state));
       }
     } catch (err) {
       console.log(err.response.data);
@@ -44,18 +43,7 @@ const Login = () => {
     // console.log(data);
   }
 
-  const googleLogin = async () => {
-    try {
-      await auth.signInWithRedirect(googleProvider);
-      setData(await auth.currentUser);
-    } catch (err) {
-      console.log(err);
-    }
-
-    if (data) {
-      navigate("/");
-    }
-  };
+  console.log(data);
 
   return (
     <section className="container pt-3 pb-4">
@@ -103,13 +91,13 @@ const Login = () => {
               Login
             </button>
           </form>
-
-          <p className="text-center mt-2 col-xl-8">OR</p>
-          <div className="google-button col-xl-8" onClick={googleLogin}>
-            <img src={googleIcon} alt="googleIcon" />
-            <button type="button" className="google-btn">
-              Login with Google
-            </button>
+          <div className="col-xl-8 text-center p-3">
+            <p>
+              Create a Account
+              <NavLink to="/register" className="px-2">
+                SingUp
+              </NavLink>
+            </p>
           </div>
         </div>
       </div>

@@ -19,7 +19,7 @@ const Logout = () => {
       })
       .then((res) => {
         if (res.status === 200) {
-          dispatch({ type: "USER", payload: false });
+          dispatch({ type: "USER", payload: res });
           navigate("/login", { replace: true });
         }
       })

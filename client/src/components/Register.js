@@ -130,7 +130,9 @@ const Register = () => {
 
           <p className="mt-3 text-center col-xl-8">
             I have already account
-            <NavLink to="/login">Login</NavLink>
+            <NavLink to="/login" className="px-2">
+              Login
+            </NavLink>
           </p>
         </div>
         <div className="col-sm col-lg-6 col-xl d-none d-md-block">
