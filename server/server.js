@@ -24,7 +24,7 @@ app.use(express.json());
 app.use(
   cors({
     credentials: true,
-    origin: "https://login-signup-app-api.onrender.com",
+    origin: "https://login-signup-app.onrender.com",
   })
 );
 app.use(cookieParser());
